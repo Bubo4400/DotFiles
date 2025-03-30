@@ -8,14 +8,13 @@
   nixpkgs.config.allowUnfree = true;
 
   home.file = {
-    ".config/sway".source = ./configs/sway;
-    ".config/wofi".source = ./configs/wofi;
-    ".config/waybar".source = ./configs/waybar;
-    ".config/fish".source = ./configs/fish;
-    ".config/kitty".source = ./configs/kitty;
-    ".config/starship.toml".source = ./configs/starship.toml;
-    ".config/swaync".source = ./configs/swaync;
-    ".config/vesktop".source = ./configs/vesktop;
+    ".config/sway".source = ./config/sway;
+    ".config/wofi".source = ./config/wofi;
+    ".config/waybar".source = ./config/waybar;
+    ".config/fish".source = ./config/fish;
+    ".config/kitty".source = ./config/kitty;
+    ".config/starship.toml".source = ./config/starship.toml;
+    ".config/swaync".source = ./config/swaync;
   };
 
   # User-level packages
