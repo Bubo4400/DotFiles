@@ -40,7 +40,7 @@
   # System-wide packages
   environment.systemPackages = with pkgs; [
     # Core utilities
-    wget curl git unzip vim htop neofetch
+    wget curl git unzip vim htop
 
     # Wayland / Sway environment
     sway swaylock swayidle swaybg swaynotificationcenter 
@@ -56,19 +56,15 @@
     vesktop spotify brave beeper
 
     # Development tools
-    jetbrains.rider dotnet-sdk_7 unityhub 
+    jetbrains.rider dotnet-sdk_7
 
     # Other
-    gtk3 libinput fuse home-manager chromium
+    gtk3 libinput fuse home-manager
+ ];
 
-    # Games
-    prismlauncher forge 
-  ];
-
-  fonts.packages = with pkgs; [
-    nerdfonts
+  fonts.packages = with pkgs; [ 
     font-awesome
-  ];
+  ] ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 
   # Greetd (Login Manager)
   services.greetd = {
