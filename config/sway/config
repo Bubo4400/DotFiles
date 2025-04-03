@@ -1,6 +1,13 @@
+# Global SwayFX Settings
+blur enable
+corner_radius 10
+# (Optional) Enable blur on specific layers – for example, for waybar:
+# layer_effects waybar blur
+
 # Set the mod key
 set $mod Mod4
 
+# Input settings
 input "type:touchpad" {
   # Enable tap-to-click
   tap enabled
@@ -11,7 +18,6 @@ input "type:touchpad" {
 
 input * xkb_layout "gb"
 
-
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
 # Increase volume by 10%, but not above 80%
@@ -21,44 +27,43 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
-# Launch terminal 
-bindsym $mod+Return exec kitty 
+# Launch terminal
+bindsym $mod+Return exec kitty
 
 # Launch application launcher
 bindsym $mod+d exec wofi --show drun
 
-# Basic keybinds 
+# Basic keybinds
 bindsym $mod+Shift+q kill
 bindsym $mod+v split v
 bindsym $mod+h split h
 bindsym $mod+f fullscreen
 
-# change focus
+# Change focus
 bindsym $mod+j focus left
 bindsym $mod+k focus down
 bindsym $mod+l focus up
 bindsym $mod+semicolon focus right
 
-# alternatively, you can use the cursor keys:
+# Alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
-# move focused window
+# Move focused window
 bindsym $mod+Shift+j move left
 bindsym $mod+Shift+k move down
 bindsym $mod+Shift+l move up
 bindsym $mod+Shift+semicolon move right
 
-# alternatively, you can use the cursor keys:
+# Alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-# Define names for default workspaces for which we configure key bindings later on.
-# We use variables to avoid repeating the names in multiple places.
+# Define workspace names
 set $ws1 "1:Main"
 set $ws2 "2:Secondary"
 set $ws3 "3:Communication"
@@ -70,7 +75,7 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
-# switch to workspace
+# Switch to workspace
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
 bindsym $mod+3 workspace $ws3
@@ -85,7 +90,7 @@ bindsym $mod+0 workspace number $ws10
 # Allow going back
 workspace_auto_back_and_forth yes
 
-# move focused container to workspace
+# Move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
 bindsym $mod+Shift+2 move container to workspace $ws2
 bindsym $mod+Shift+3 move container to workspace $ws3
@@ -97,55 +102,51 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
-# Sending windows to workspace auto
+# Automatically assign windows to workspaces
 assign [class="vesktop"] → $ws3
-assign [class="Beeper"]  → $ws10
+assign [class="Beeper"] → $ws10
 assign [class="Spotify"] → $ws4
 
-# Customize the windows
+# Global window styling
 for_window [class=".*"] border pixel 0
 for_window [class=".*"] opacity 0.80
+for_window [class="Spotify"] opacity 0.5
 
-# resize window (you can also use the mouse for that)
+# Resize mode for windows
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
+  # Adjust window size
+  bindsym j resize shrink width 10 px or 10 ppt
+  bindsym k resize grow height 10 px or 10 ppt
+  bindsym l resize shrink height 10 px or 10 ppt
+  bindsym semicolon resize grow width 10 px or 10 ppt
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
+  # Arrow keys for resizing
+  bindsym Left resize shrink width 10 px or 10 ppt
+  bindsym Down resize grow height 10 px or 10 ppt
+  bindsym Up resize shrink height 10 px or 10 ppt
+  bindsym Right resize grow width 10 px or 10 ppt
 
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
-
-        # back to normal: Enter or Escape or $mod+r
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-        bindsym $mod+r mode "default"
+  # Exit resize mode
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+  bindsym $mod+r mode "default"
 }
 
 bindsym $mod+r mode "resize"
 
-# shutdown / restart / suspend...
+# Shutdown / restart / suspend options
 mode "ConnectionOptions" {
-    	#bindsym l exec --no-startup-id $i3lockwall, mode "default"
-    	bindsym e exec --no-startup-id swaymsg exit, mode "default"
-    	bindsym s exec --no-startup-id systemctl suspend, mode "default"
-    	bindsym h exec --no-startup-id systemctl hibernate, mode "default"
-    	bindsym r exec --no-startup-id systemctl reboot, mode "default"
-    	bindsym Ctrl+s exec --no-startup-id systemctl poweroff -i, mode "default"
+  # Example: Lock screen, exit sway, suspend, etc.
+  bindsym e exec --no-startup-id swaymsg exit, mode "default"
+  bindsym s exec --no-startup-id systemctl suspend, mode "default"
+  bindsym h exec --no-startup-id systemctl hibernate, mode "default"
+  bindsym r exec --no-startup-id systemctl reboot, mode "default"
+  bindsym Ctrl+s exec --no-startup-id systemctl poweroff -i, mode "default"
 
-    	# back to normal: Enter or Escape or Home
-    	bindsym Return mode "default"
-    	bindsym Escape mode "default"
-	bindsym Home mode "default"
+  # Exit the mode
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+  bindsym Home mode "default"
 }
 
 bindsym Home mode "ConnectionOptions"
@@ -153,28 +154,46 @@ bindsym Home mode "ConnectionOptions"
 # Reload configuration file
 bindsym $mod+Shift+c reload
 
-# Change the scaling of screen
+# Output scaling (adjust to your needs)
 output eDP-1 scale 1.42
 
 # Set background picture
 exec swaybg -i ~/Pictures/background.jpg -m fill
 
+# Set wallpaper with pywal (optional)
 exec --no-startup-id wal -i ~/Pictures/background.jpg
 
-# Bind Taking a screenshot
+# Bind screenshot command
 bindsym --release Print exec --no-startup-id grim -g "$(slurp)" ~/Pictures/latest-screenshot.png
 
-# Binding the change brightness buttons
+# Bind brightness adjustment buttons
 bindsym XF86MonBrightnessUp exec --no-startup-id ~/.config/sway/script/adjust_brightness.sh up
 bindsym XF86MonBrightnessDown exec --no-startup-id ~/.config/sway/script/adjust_brightness.sh down
 
-# Enable gaps globally
+# Enable gaps
 gaps inner 5
 gaps outer 4
 
-# Starting swaync and waybar with appropriate colours
+# Start swaync and waybar
 exec --no-startup-id sh -c "swaync"
 exec --no-startup-id sh -c "waybar"
 bindsym $mod+n exec swaync-client -t
 
 bindsym $mod+Shift+t exec --no-startup-id ~/.config/sway/script/Opaque.sh
+
+# Application-specific effects
+
+# For Kitty: adjust opacity, blur, and rounded corners
+for_window [app_id="kitty"] opacity 0.9 blur_passes 3 blur_sigma 5 blur_noise 0.01 border_radius 8
+
+# For Brave Browser
+for_window [app_id="brave-browser"] opacity 0.95 blur_passes 2 blur_sigma 3 blur_noise 0.005
+
+# For Spotify
+for_window [class="Spotify"] opacity 0.5 blur_passes 2 blur_sigma 3 blur_noise 0.005
+
+# Apply blur settings to all floating windows
+for_window [floating] blur_passes 2 blur_sigma 3 blur_noise 0.005
+
+# Toggle floating mode
+bindsym $mod+Shift+space floating toggle

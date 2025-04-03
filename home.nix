@@ -10,7 +10,7 @@
   home.file = {
     ".config/sway".source = ./config/sway;
     ".config/wofi".source = ./config/wofi;
-    ".config/waybar".source = ./config/waybar;
+    #".config/waybar".source = ./config/waybar;
     ".config/fish".source = ./config/fish;
     ".config/kitty".source = ./config/kitty;
     ".config/starship.toml".source = ./config/starship.toml;
@@ -26,7 +26,7 @@
     prismlauncher    
     
     # School
-    unityhub
+    unityhub anytype
   ];
 
   # Environment Variables
